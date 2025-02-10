@@ -6,4 +6,9 @@ DATABASE_URL = 'postgresql://postgres:test12@localhost:5432/fluttermusicapp'
 
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-db = SessionLocal()
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
